@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  color: #f5f0e8;
+  background: #171717;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: #e99a48;
+  color: #171717;
+}
+
+
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+
+  .qr-print-area,
+  .qr-print-area * {
+    visibility: visible !important;
+  }
+
+  .qr-print-area {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    border: none !important;
+    box-shadow: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .qr-print-area img {
+    width: 260px !important;
+    height: 260px !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+}
