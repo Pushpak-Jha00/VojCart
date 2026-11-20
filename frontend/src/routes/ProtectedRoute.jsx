@@ -10,27 +10,28 @@ function ProtectedRoute() {
       return response.data.admin;
     },
     retry: false,
+    refetchOnWindowFocus: false,
   });
 
   if (isPending) {
     return (
-      <div className="min-h-screen bg-[#171717] flex items-center justify-center">
-        <div className="h-8 w-8 rounded-full border-2 border-[#E99A48] border-t-transparent animate-spin" />
+      <div className="flex min-h-screen items-center justify-center bg-[#171717]">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#E99A48] border-t-transparent" />
       </div>
     );
   }
 
   if (isError) {
-    if (error.response?.status === 401) {
+    if (error?.response?.status === 401) {
       return <Navigate to="/admin/login" replace />;
     }
 
     return (
-      <div className="min-h-screen bg-[#171717] text-white flex flex-col items-center justify-center gap-3">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-[#171717] text-white">
         <p>Unable to verify your admin session.</p>
         <button
           onClick={() => window.location.reload()}
-          className="rounded-lg bg-[#E99A48] px-5 py-2 text-black"
+          className="rounded-lg bg-[#E99A48] px-5 py-2 font-semibold text-black"
         >
           Retry
         </button>
