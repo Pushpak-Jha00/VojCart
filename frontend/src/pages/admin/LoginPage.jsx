@@ -4,15 +4,17 @@ import { useQueryClient } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import {
+  ArrowLeft,
+  ArrowRight,
   Eye,
   EyeOff,
   LockKeyhole,
   Mail,
-  ArrowRight,
-  Store,
   ShieldCheck,
+  Store,
   Utensils,
   Loader2,
+  Sparkles,
 } from "lucide-react";
 
 import api from "../../api/axios";
@@ -53,25 +55,22 @@ export default function LoginPage() {
       setLoading(true);
       setError("");
 
-      // Step 1: Login and receive authentication cookie.
       await api.post("/auth/login", {
         email: form.email.trim(),
         password: form.password,
       });
 
-      // Step 2: Verify that the browser sends the cookie.
+      // Verify the authenticated session using the cookie.
       const meResponse = await api.get("/auth/me");
 
       if (!meResponse.data?.admin) {
         throw new Error("Unable to verify admin session.");
       }
 
-      // Step 3: Store the verified admin session in React Query.
       queryClient.setQueryData(["admin", "me"], meResponse.data.admin);
 
       toast.success("Welcome back! Login successful.");
 
-      // Step 4: Navigate only after session verification.
       navigate("/admin", { replace: true });
     } catch (err) {
       const message =
@@ -91,68 +90,70 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F4F0E9] p-3 sm:p-5 lg:p-8">
-      <div className="mx-auto grid min-h-[calc(100vh-24px)] max-w-[1250px] overflow-hidden rounded-[26px] bg-white shadow-[0_25px_90px_rgba(40,30,20,0.12)] sm:min-h-[calc(100vh-40px)] lg:grid-cols-[1.05fr_0.95fr]">
-        {/* LEFT BRAND PANEL */}
-        <section className="relative hidden overflow-hidden bg-[#25211D] text-[#F8F3EB] lg:flex lg:flex-col lg:justify-between lg:p-12 xl:p-16">
-          {/* Background decoration */}
-          <div className="pointer-events-none absolute -right-36 -top-36 h-[420px] w-[420px] rounded-full border border-[#E99A48]/15" />
-          <div className="pointer-events-none absolute -right-16 -top-16 h-[280px] w-[280px] rounded-full border border-[#E99A48]/20" />
-          <div className="pointer-events-none absolute -bottom-40 -left-36 h-[420px] w-[420px] rounded-full bg-[#E99A48]/[0.07] blur-3xl" />
+    <main className="min-h-screen bg-[#F3EEE5] p-3 sm:p-5 lg:p-8">
+      <div className="mx-auto grid min-h-[calc(100vh-24px)] max-w-[1280px] overflow-hidden rounded-[28px] border border-[#E8DED0] bg-white shadow-[0_25px_80px_rgba(43,34,24,0.10)] sm:min-h-[calc(100vh-40px)] lg:grid-cols-[1.08fr_0.92fr]">
+        {/* LEFT BRAND SECTION */}
+        <section className="relative hidden flex-col justify-between overflow-hidden bg-[#29231E] p-10 text-[#F8F1E7] lg:flex xl:p-14">
+          {/* Decorative background */}
+          <div className="pointer-events-none absolute -right-40 -top-40 h-[480px] w-[480px] rounded-full border border-[#E99A48]/15" />
+          <div className="pointer-events-none absolute -right-20 -top-20 h-[320px] w-[320px] rounded-full border border-[#E99A48]/20" />
+          <div className="pointer-events-none absolute -bottom-48 -left-40 h-[480px] w-[480px] rounded-full bg-[#E99A48]/10 blur-3xl" />
 
           {/* Brand */}
           <div className="relative z-10 flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#E99A48] text-[#25211D] shadow-lg shadow-black/20">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#E99A48] text-[#29231E] shadow-lg">
               <Store size={23} strokeWidth={2.2} />
             </div>
 
             <div>
-              <h1 className="text-xl font-bold tracking-tight">VojCart</h1>
-              <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.23em] text-[#A89D90]">
-                Digital Menu Platform
+              <h1 className="text-xl font-extrabold tracking-tight">VojCart</h1>
+              <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.24em] text-[#A99C8C]">
+                Street food. Simplified.
               </p>
             </div>
           </div>
 
-          {/* Main message */}
-          <div className="relative z-10 max-w-[460px]">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#E99A48]/25 bg-[#E99A48]/10 px-3.5 py-2">
-              <span className="h-2 w-2 rounded-full bg-[#E99A48]" />
+          {/* Main content */}
+          <div className="relative z-10 my-12 max-w-[490px]">
+            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#E99A48]/25 bg-[#E99A48]/10 px-4 py-2">
+              <Sparkles size={13} className="text-[#E99A48]" />
               <span className="text-[10px] font-bold uppercase tracking-[0.17em] text-[#E9B47F]">
                 Admin workspace
               </span>
             </div>
 
-            <h2 className="text-4xl font-bold leading-[1.15] tracking-tight xl:text-[48px]">
-              Your menu.
+            <h2 className="text-5xl font-bold leading-[1.13] tracking-tight xl:text-[58px]">
+              Good food.
               <br />
-              Your <span className="text-[#E99A48]">control.</span>
+              <span className="text-[#E99A48]">Great business.</span>
             </h2>
 
-            <p className="mt-6 max-w-[380px] text-sm leading-7 text-[#B8AEA2]">
-              Manage your food menu, organise categories, update availability
-              and keep your digital storefront ready for customers.
+            <p className="mt-6 max-w-[390px] text-sm leading-7 text-[#B9AEA1]">
+              Your food van, your menu, your control. Manage products, organise
+              categories and keep your digital storefront ready for every
+              customer.
             </p>
 
-            {/* Decorative menu preview */}
-            <div className="mt-12 max-w-[390px] rounded-2xl border border-white/[0.09] bg-white/[0.045] p-5 shadow-2xl backdrop-blur-sm">
-              <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
+            {/* Menu preview */}
+            <div className="mt-12 max-w-[390px] rounded-2xl border border-white/10 bg-white/[0.045] p-5 backdrop-blur-sm">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <div className="flex items-center gap-2">
                   <Utensils size={16} className="text-[#E99A48]" />
-                  <span className="text-xs font-semibold text-[#F2E8DB]">
-                    Your digital menu
+                  <span className="text-xs font-semibold text-[#F4EBDD]">
+                    Today's menu
                   </span>
                 </div>
-                <span className="rounded-full bg-[#E99A48]/15 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-[#E9B47F]">
-                  Live menu
+
+                <span className="rounded-full bg-[#E99A48]/15 px-3 py-1 text-[9px] font-bold uppercase tracking-wider text-[#E9B47F]">
+                  VojCart
                 </span>
               </div>
 
-              <div className="space-y-4 pt-4">
+              <div className="space-y-4 pt-5">
                 {[
                   {
                     name: "Classic Burger",
-                    description: "Fresh and delicious",
+                    description: "Freshly prepared favourite",
                     price: "₹149",
                     symbol: "B",
                   },
@@ -164,15 +165,15 @@ export default function LoginPage() {
                   },
                 ].map((item) => (
                   <div key={item.name} className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E99A48]/15 text-sm font-bold text-[#E9B47F]">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#E99A48]/15 text-sm font-bold text-[#E9B47F]">
                       {item.symbol}
                     </div>
 
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-semibold text-[#F4EDE3]">
+                      <p className="text-sm font-semibold text-[#F4EBDD]">
                         {item.name}
                       </p>
-                      <p className="mt-1 text-[10px] text-[#A89D90]">
+                      <p className="mt-1 text-[10px] text-[#A99C8C]">
                         {item.description}
                       </p>
                     </div>
@@ -187,53 +188,72 @@ export default function LoginPage() {
           </div>
 
           {/* Bottom information */}
-          <div className="relative z-10 flex items-center justify-between border-t border-white/[0.08] pt-6">
-            <p className="text-xs text-[#93887B]">
+          <div className="relative z-10 flex items-center justify-between border-t border-white/10 pt-6">
+            <p className="text-[11px] text-[#93877A]">
               © {new Date().getFullYear()} VojCart
             </p>
-            <div className="flex items-center gap-2 text-xs text-[#A89D90]">
+
+            <div className="flex items-center gap-2 text-[11px] text-[#B9AEA1]">
               <ShieldCheck size={15} className="text-[#E99A48]" />
-              Secure admin access
+              Secure administrator access
             </div>
           </div>
         </section>
 
-        {/* RIGHT LOGIN PANEL */}
-        <section className="flex items-center justify-center px-6 py-12 sm:px-12 lg:px-12 xl:px-16">
+        {/* RIGHT LOGIN SECTION */}
+        <section className="relative flex items-center justify-center px-5 py-8 sm:px-10 sm:py-12 lg:px-12 xl:px-16">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
-            className="w-full max-w-[390px]"
+            className="w-full max-w-[410px]"
           >
-            {/* Mobile brand */}
-            <div className="mb-12 flex items-center gap-3 lg:hidden">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E99A48] text-[#25211D]">
-                <Store size={21} />
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-[#29251F]">VojCart</h1>
-                <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#968B7F]">
-                  Digital Menu Platform
-                </p>
-              </div>
+            {/* Top navigation */}
+            <div className="mb-12 flex items-center justify-between gap-3">
+              {/* Mobile brand */}
+              <Link to="/menu" className="flex items-center gap-2.5 lg:hidden">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E99A48] text-[#29231E]">
+                  <Store size={20} />
+                </div>
+
+                <div>
+                  <h1 className="text-lg font-extrabold text-[#29231E]">
+                    VojCart
+                  </h1>
+                  <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-[#A09689]">
+                    Digital Menu
+                  </p>
+                </div>
+              </Link>
+
+              {/* Customer menu button */}
+              <Link
+                to="/menu"
+                className="group ml-auto inline-flex items-center gap-2 rounded-full border border-[#E9DED0] bg-[#FBF8F3] px-4 py-2.5 text-[11px] font-bold text-[#66594C] transition hover:border-[#D69A5E] hover:bg-[#F8EBDD] hover:text-[#A55E26]"
+              >
+                <ArrowLeft
+                  size={14}
+                  className="transition-transform group-hover:-translate-x-1"
+                />
+                Back to Menu
+              </Link>
             </div>
 
             {/* Heading */}
             <div className="mb-9">
-              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F9EAD9] text-[#BD752F]">
+              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F8EBDD] text-[#B86C30]">
                 <LockKeyhole size={22} />
               </div>
 
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#BD752F]">
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#B86C30]">
                 Administrator access
               </p>
 
-              <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#29251F]">
-                Welcome back
+              <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-[#29231E] sm:text-[34px]">
+                Welcome back.
               </h2>
 
-              <p className="mt-2 text-sm leading-6 text-[#91877B]">
+              <p className="mt-2 text-sm leading-6 text-[#92877B]">
                 Sign in to manage your store and digital menu.
               </p>
             </div>
@@ -244,7 +264,7 @@ export default function LoginPage() {
               <div>
                 <label
                   htmlFor="email"
-                  className="mb-2 block text-xs font-bold text-[#51483E]"
+                  className="mb-2 block text-xs font-bold text-[#51473D]"
                 >
                   Email address
                 </label>
@@ -252,7 +272,7 @@ export default function LoginPage() {
                 <div className="relative">
                   <Mail
                     size={17}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A49A8E]"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A69A8D]"
                   />
 
                   <input
@@ -264,26 +284,24 @@ export default function LoginPage() {
                     value={form.email}
                     onChange={handleChange}
                     placeholder="admin@example.com"
-                    className="w-full rounded-xl border border-[#E7E0D6] bg-[#FAF8F4] py-3.5 pl-11 pr-4 text-sm text-[#302B25] outline-none transition placeholder:text-[#B5AA9E] focus:border-[#D69A5E] focus:bg-white focus:ring-4 focus:ring-[#E99A48]/10"
+                    className="w-full rounded-xl border border-[#E7DED2] bg-[#FBF9F5] py-3.5 pl-11 pr-4 text-sm text-[#302A23] outline-none transition placeholder:text-[#B7ADA2] focus:border-[#D69A5E] focus:bg-white focus:ring-4 focus:ring-[#E99A48]/10"
                   />
                 </div>
               </div>
 
               {/* Password */}
               <div>
-                <div className="mb-2 flex items-center justify-between">
-                  <label
-                    htmlFor="password"
-                    className="text-xs font-bold text-[#51483E]"
-                  >
-                    Password
-                  </label>
-                </div>
+                <label
+                  htmlFor="password"
+                  className="mb-2 block text-xs font-bold text-[#51473D]"
+                >
+                  Password
+                </label>
 
                 <div className="relative">
                   <LockKeyhole
                     size={17}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A49A8E]"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A69A8D]"
                   />
 
                   <input
@@ -295,7 +313,7 @@ export default function LoginPage() {
                     value={form.password}
                     onChange={handleChange}
                     placeholder="Enter your password"
-                    className="w-full rounded-xl border border-[#E7E0D6] bg-[#FAF8F4] py-3.5 pl-11 pr-12 text-sm text-[#302B25] outline-none transition placeholder:text-[#B5AA9E] focus:border-[#D69A5E] focus:bg-white focus:ring-4 focus:ring-[#E99A48]/10"
+                    className="w-full rounded-xl border border-[#E7DED2] bg-[#FBF9F5] py-3.5 pl-11 pr-12 text-sm text-[#302A23] outline-none transition placeholder:text-[#B7ADA2] focus:border-[#D69A5E] focus:bg-white focus:ring-4 focus:ring-[#E99A48]/10"
                   />
 
                   <button
@@ -304,28 +322,30 @@ export default function LoginPage() {
                     aria-label={
                       showPassword ? "Hide password" : "Show password"
                     }
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A49A8E] transition hover:text-[#BD752F]"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A69A8D] transition hover:text-[#B86C30]"
                   >
                     {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
                   </button>
                 </div>
               </div>
 
-              {/* Error message */}
+              {/* Error */}
               {error && (
-                <div
+                <motion.div
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
                   role="alert"
                   className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs font-medium leading-5 text-red-700"
                 >
                   {error}
-                </div>
+                </motion.div>
               )}
 
               {/* Submit */}
               <button
                 type="submit"
                 disabled={loading}
-                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#29251F] px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#29251F]/10 transition hover:bg-[#44392E] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
+                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-[#29231E] px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#29231E]/10 transition hover:bg-[#44392E] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? (
                   <>
@@ -344,26 +364,40 @@ export default function LoginPage() {
               </button>
             </form>
 
-            {/* Security note */}
-            <div className="mt-8 flex items-start gap-3 rounded-xl border border-[#EEE8E0] bg-[#FAF8F4] p-4">
+            {/* Security information */}
+            <div className="mt-8 flex items-start gap-3 rounded-xl border border-[#EEE5DA] bg-[#FBF9F5] p-4">
               <ShieldCheck
                 size={18}
-                className="mt-0.5 shrink-0 text-[#BD752F]"
+                className="mt-0.5 shrink-0 text-[#B86C30]"
               />
+
               <div>
-                <p className="text-xs font-bold text-[#51483E]">
+                <p className="text-xs font-bold text-[#51473D]">
                   Protected administrator area
                 </p>
-                <p className="mt-1 text-[11px] leading-5 text-[#968B7F]">
-                  This login is only for authorised store administrators.
-                  Customer registration is not available here.
+
+                <p className="mt-1 text-[11px] leading-5 text-[#968A7D]">
+                  This area is only for authorised store administrators.
+                  Customers can explore the menu without signing in.
                 </p>
               </div>
             </div>
 
-            <p className="mt-8 text-center text-[11px] text-[#A49A8E] lg:hidden">
-              © {new Date().getFullYear()} VojCart. All rights reserved.
-            </p>
+            {/* Bottom navigation */}
+            <div className="mt-8 border-t border-[#EEE7DE] pt-5 text-center">
+              <Link
+                to="/menu"
+                className="inline-flex items-center gap-2 text-xs font-semibold text-[#A16A3D] transition hover:text-[#75431F]"
+              >
+                <Utensils size={14} />
+                Continue exploring the customer menu
+                <ArrowRight size={13} />
+              </Link>
+
+              <p className="mt-5 text-[10px] text-[#A69B8F]">
+                © {new Date().getFullYear()} VojCart. All rights reserved.
+              </p>
+            </div>
           </motion.div>
         </section>
       </div>

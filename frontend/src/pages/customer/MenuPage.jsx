@@ -13,7 +13,6 @@ import {
   Clock3,
   ShieldCheck,
   ArrowUpRight,
-  Link,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -462,12 +461,12 @@ function MenuPage() {
                   { label: "Home", href: "#home" },
                   { label: "Our Menu", href: "#menu" },
                   { label: "Our Story", href: "#about" },
-                ].map((item, index) => (
+                ].map((item) => (
                   <a
                     key={item.href}
                     href={item.href}
                     onClick={closeMobileMenu}
-                    className="flex items-center justify-between rounded-xl px-4 py-3.5 text-sm font-semibold text-[#5F554A] transition hover:bg-[#E9DECC] hover:text-[#D97832]"
+                    className="flex min-h-12 items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-[#5F554A] transition hover:bg-[#E9DECC] hover:text-[#D97832]"
                   >
                     <span>{item.label}</span>
                     <ArrowUpRight size={15} className="text-[#A18E79]" />
@@ -476,15 +475,15 @@ function MenuPage() {
 
                 <div className="my-2 border-t border-[#29231E]/10" />
 
-                <Link
+                <a
                   href="/admin/login"
                   onClick={closeMobileMenu}
-                  className="flex items-center justify-center gap-2.5 rounded-xl bg-[#29231E] px-4 py-3.5 text-sm font-bold text-[#F7F2E8] shadow-sm transition hover:bg-[#D97832] hover:text-[#29231E]"
+                  className="flex min-h-12 items-center justify-center gap-2.5 rounded-xl bg-[#29231E] px-4 py-3.5 text-sm font-bold text-[#F7F2E8] shadow-sm transition hover:bg-[#D97832] hover:text-[#29231E]"
                 >
                   <ShieldCheck size={17} />
                   Admin Panel
                   <ArrowUpRight size={15} />
-                </Link>
+                </a>
 
                 <p className="pt-3 text-center text-[9px] font-bold uppercase tracking-[0.22em] text-[#A18E79]">
                   Fresh food · Made on wheels
@@ -860,7 +859,7 @@ function MenuPage() {
             </div>
           ) : menuQuery.data ? (
             products.length > 0 ? (
-              <div className="grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-3">
                 {products.map((product, index) => (
                   <ProductCard
                     key={product._id}
