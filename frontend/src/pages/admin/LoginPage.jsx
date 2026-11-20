@@ -53,25 +53,35 @@ export default function LoginPage() {
       setLoading(true);
       setError("");
 
-      // Login API sets the authentication cookie.
-      // No JWT is stored in localStorage.
+      // Step 1: Login and receive authentication cookie.
       await api.post("/auth/login", {
         email: form.email.trim(),
         password: form.password,
       });
 
-      // Remove any previously cached unauthenticated result.
-      queryClient.removeQueries({
-        queryKey: ["admin", "me"],
-      });
+      // Step 2: Verify that the browser sends the cookie.
+      const meResponse = await api.get("/auth/me");
+
+      if (!meResponse.data?.admin) {
+        throw new Error("Unable to verify admin session.");
+      }
+
+      // Step 3: Store the verified admin session in React Query.
+      queryClient.setQueryData(["admin", "me"], meResponse.data.admin);
 
       toast.success("Welcome back! Login successful.");
 
+      // Step 4: Navigate only after session verification.
       navigate("/admin", { replace: true });
     } catch (err) {
       const message =
         err?.response?.data?.message ||
+        err?.message ||
         "Unable to sign in. Please check your credentials.";
+
+      queryClient.removeQueries({
+        queryKey: ["admin", "me"],
+      });
 
       setError(message);
       toast.error(message);
