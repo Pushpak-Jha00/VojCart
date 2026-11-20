@@ -13,6 +13,7 @@ import {
   Clock3,
   ShieldCheck,
   ArrowUpRight,
+  Link,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -475,7 +476,7 @@ function MenuPage() {
 
                 <div className="my-2 border-t border-[#29231E]/10" />
 
-                <a
+                <Link
                   href="/admin/login"
                   onClick={closeMobileMenu}
                   className="flex items-center justify-center gap-2.5 rounded-xl bg-[#29231E] px-4 py-3.5 text-sm font-bold text-[#F7F2E8] shadow-sm transition hover:bg-[#D97832] hover:text-[#29231E]"
@@ -483,7 +484,7 @@ function MenuPage() {
                   <ShieldCheck size={17} />
                   Admin Panel
                   <ArrowUpRight size={15} />
-                </a>
+                </Link>
 
                 <p className="pt-3 text-center text-[9px] font-bold uppercase tracking-[0.22em] text-[#A18E79]">
                   Fresh food · Made on wheels
